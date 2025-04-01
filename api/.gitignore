@@ -1,0 +1,11 @@
+/node_modules
+/dist
+/.idea
+/.vscode
+
+.env
+.env.*
+!.env.example
+
+/src/generated/prisma/
+/firebase/service-account.json
