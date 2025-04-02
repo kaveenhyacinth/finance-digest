@@ -28,6 +28,7 @@ export const ArticleCard = ({
           alt="Featured Image"
           className={clsx("w-full h-[200px] object-cover rounded-[6px]", isFirstItem ? "md:!h-[400px]" : "")}
           src={image ?? null}
+          referrerPolicy="no-referrer"
         />
         <span
           className="uppercase bg-white px-2 py-0.5 inline-flex justify-center items-center rounded-[2px] text-black absolute right-3 bottom-3 z-10 font-roboto font-bold text-xs">
