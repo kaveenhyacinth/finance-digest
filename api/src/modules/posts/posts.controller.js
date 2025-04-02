@@ -1,7 +1,7 @@
 import { createBlottPost, findAllBlottPosts, findAllFinnhubPosts } from './posts.service.js';
-import { errorRes, successRes } from '../../lib/response.util.js';
+import { errorRes, successRes } from '../../lib/utils/response.util.js';
 
-async function findAll(req, res, next) {
+export async function findAll(req, res, next) {
   try {
     const finnhubPosts = await findAllFinnhubPosts();
     const blottPosts = await findAllBlottPosts();
@@ -11,7 +11,7 @@ async function findAll(req, res, next) {
   }
 }
 
-async function create(req, res, next) {
+export async function create(req, res, next) {
   try {
     await createBlottPost(req.body);
     return successRes(res, 200, { message: 'Post created successfully.' });
@@ -19,8 +19,3 @@ async function create(req, res, next) {
     return errorRes(next, error);
   }
 }
-
-export {
-  findAll,
-  create,
-};
