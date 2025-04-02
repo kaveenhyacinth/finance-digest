@@ -1,12 +1,27 @@
 import { createBlottPost, findAllBlottPosts, findAllFinnhubPosts } from './post.service.js';
 import { errorRes, successRes } from '../../lib/utils/response.util.js';
 import { unauthenticatedException } from '../../lib/utils/exception.util.js';
+import { getPagination } from '../../lib/utils/pagination.util.js';
 
 export async function findAll(req, res, next) {
+  const pagination = getPagination(req.query.page, req.query.size);
+  const { size, offset, getPaginationMeta } = pagination;
+
   try {
     const finnhubPosts = await findAllFinnhubPosts();
     const blottPosts = await findAllBlottPosts();
-    return successRes(res, 200, { data: blottPosts });
+
+    const feed = [...blottPosts, ...finnhubPosts];
+    const sortedFeed = feed?.sort(
+      (a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime(),
+    );
+
+    const paginatedFeed = sortedFeed.slice(offset, offset + size);
+
+    return successRes(res, 200, {
+      data: paginatedFeed,
+      meta: getPaginationMeta(feed?.length),
+    });
   } catch (error) {
     return errorRes(next, error);
   }

@@ -1,6 +1,7 @@
 import finnhubClient from '../../config/finnhub.js';
 import prisma from '../../config/prisma.js';
 import { internalServerException } from '../../lib/utils/exception.util.js';
+import { formatToISODateString, secondsToMillis } from '../../lib/utils/date.util.js';
 
 export async function findAllFinnhubPosts() {
   try {
@@ -20,8 +21,8 @@ export async function findAllFinnhubPosts() {
       image: post.image,
       provider: 'finnhub',
       userId: null,
-      createdAt: post.datetime,
-      updatedAt: post.datetime,
+      createdAt: formatToISODateString(secondsToMillis(post.datetime)),
+      updatedAt: formatToISODateString(secondsToMillis(post.datetime)),
     }));
   } catch (error) {
     throw error;
@@ -29,7 +30,11 @@ export async function findAllFinnhubPosts() {
 }
 
 export async function findAllBlottPosts() {
-  return await prisma.post.findMany();
+  return await prisma.post.findMany({
+    orderBy: {
+      createAt: 'desc',
+    },
+  });
 }
 
 export async function createBlottPost(userId, { title, image, url }) {
