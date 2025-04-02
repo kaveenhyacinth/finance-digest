@@ -12,6 +12,10 @@ export function badRequestException(errorMsg) {
   return baseException(400, errorMsg);
 }
 
+export function notFoundException(errorMsg) {
+  return baseException(404, errorMsg);
+}
+
 export function unauthenticatedException(errorMsg) {
   return baseException(401, errorMsg);
 }

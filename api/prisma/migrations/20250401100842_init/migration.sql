@@ -1,5 +1,0 @@
--- AlterSequence
-ALTER SEQUENCE "posts_id_seq" MAXVALUE 9223372036854775807;
-
--- AlterSequence
-ALTER SEQUENCE "users_id_seq" MAXVALUE 9223372036854775807;

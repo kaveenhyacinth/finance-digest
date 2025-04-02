@@ -9,6 +9,7 @@ const env = {
   firebase: {
     storageBucketUrl: process.env.FIREBASE_BUCKET_URL || '',
   },
+  jwtSecret: process.env.JWT_SECRET || '',
 };
 
 export default env;
