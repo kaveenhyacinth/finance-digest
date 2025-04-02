@@ -5,6 +5,7 @@ import { BsArrowUpRightCircle } from "react-icons/bs";
 import { Text1, Title1 } from "../atoms/base-label";
 import { PostProvider } from "@/api/posts/types";
 import clsx from "clsx";
+import { Image } from "@heroui/image";
 
 interface ArticleCardProps {
   image: string;
@@ -24,9 +25,9 @@ export const ArticleCard = ({
   return (
     <NextLink href={redirectLink} target="_blank" rel="noopener noreferrer" className="w-full">
       <div className="next-image-fluid relative">
-        <img
+        <Image
           alt="Featured Image"
-          className={clsx("w-full h-[200px] object-cover rounded-[6px]", isFirstItem ? "md:!h-[400px]" : "")}
+          className={clsx("w-full h-[200px] object-cover", isFirstItem ? "md:!h-[400px]" : "")}
           src={image ?? null}
           referrerPolicy="no-referrer"
         />
