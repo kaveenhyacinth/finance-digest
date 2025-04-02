@@ -5,6 +5,7 @@ import { STORAGE_KEY_TOKEN } from "@/lib/constants";
 
 import sdk from "./$api";
 import env from "@/config/env";
+import useAuthStore from "@/store/auth";
 
 const http = axios.create({
   baseURL: env.apiUrl,
@@ -32,8 +33,17 @@ http.interceptors.request.use(
   }
 );
 
-// http.interceptors.response.use();
+http.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (typeof window === "undefined") {
+      if (error?.response?.status === 401) {
+        useAuthStore.getState().logout();
+      }
+    }
 
-export const axiosInstance = http;
+    return Promise.reject(error);
+  }
+);
 
 export const fgApi = sdk(aspida(http));

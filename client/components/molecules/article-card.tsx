@@ -1,5 +1,4 @@
 import React from "react";
-import { Image } from "@heroui/image";
 import NextLink from "next/link";
 import { BsArrowUpRightCircle } from "react-icons/bs";
 
@@ -25,9 +24,9 @@ export const ArticleCard = ({
   return (
     <NextLink href={redirectLink} target="_blank" rel="noopener noreferrer" className="w-full">
       <div className="next-image-fluid relative">
-        <Image
-          alt="Hero image"
-          className={clsx("w-full h-[200px] object-cover", isFirstItem ? "md:!h-[400px]" : "")}
+        <img
+          alt="Featured Image"
+          className={clsx("w-full h-[200px] object-cover rounded-[6px]", isFirstItem ? "md:!h-[400px]" : "")}
           src={image ?? null}
         />
         <span
