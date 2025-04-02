@@ -21,7 +21,7 @@ export async function findAllFinnhubPosts() {
       image: post.image,
       provider: 'finnhub',
       userId: null,
-      createdAt: formatToISODateString(secondsToMillis(post.datetime)),
+      createAt: formatToISODateString(secondsToMillis(post.datetime)),
       updatedAt: formatToISODateString(secondsToMillis(post.datetime)),
     }));
   } catch (error) {

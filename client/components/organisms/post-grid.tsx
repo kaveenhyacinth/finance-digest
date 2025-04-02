@@ -19,13 +19,16 @@ export const PostGrid: React.FC<PostGridProps> = ({ posts: initPosts }) => {
 
   const loaderRef = useRef(null);
 
-  const fetchPosts = useCallback(async () => {
+  const fetchPosts = useCallback(async (currentPage: number) => {
     try {
       setIsLoading(true);
       const response = await fgApi.posts.$get({
-        query: { page, size: 20 }
+        query: { page: currentPage, size: 20 }
       });
-      setPosts((prevPosts) => [...prevPosts, ...response.data]);
+      setPosts((prevPosts) => {
+        const newPosts = [...prevPosts, ...response.data];
+        return Array.from(new Map(newPosts.map(post => [post.id, post])).values());
+      });
       setHasMore(response.meta.page < response.meta.pages);
     } catch (error: any) {
       addToast({
@@ -36,7 +39,7 @@ export const PostGrid: React.FC<PostGridProps> = ({ posts: initPosts }) => {
     } finally {
       setIsLoading(false);
     }
-  }, [page]);
+  }, []);
 
   const handleScrollObserver = useCallback((entries: IntersectionObserverEntry[]) => {
     const target = entries[0];
@@ -66,9 +69,9 @@ export const PostGrid: React.FC<PostGridProps> = ({ posts: initPosts }) => {
 
   useEffect(() => {
     if (hasMore) {
-      (async () => fetchPosts())();
+      (async () => fetchPosts(page))();
     }
-  }, [fetchPosts, hasMore]);
+  }, [fetchPosts, hasMore, page]);
 
   return (
     <section className="w-full">

@@ -36,14 +36,12 @@ export const ArticleCard = ({
         </span>
       </div>
       <Title1 text={title} className="my-4" />
-      <NextLink href={redirectLink} target="_blank" rel="noopener noreferrer">
-        <div className="h-7 flex gap-1">
-          <div className="self-end">
-            <Text1 text="Read Article" className="underline" />
-          </div>
-          <BsArrowUpRightCircle className="self-center" />
+      <div className="h-7 flex gap-1">
+        <div className="self-end">
+          <Text1 text="Read Article" className="underline" />
         </div>
-      </NextLink>
+        <BsArrowUpRightCircle className="self-center" />
+      </div>
     </NextLink>
   );
 };
