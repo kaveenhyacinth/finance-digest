@@ -1,5 +1,5 @@
-import prisma from '../../config/prisma.js';
-import { internalServerException, notFoundException } from '../../lib/utils/exception.util.js';
+import prisma from "../../config/prisma.js";
+import { internalServerException, notFoundException } from "../../lib/utils/exception.util.js";
 
 export async function isUserExists(email) {
   const user = await prisma.user.findUnique({ where: { email } });
@@ -12,19 +12,19 @@ export async function createUser({ firstName, lastName, email, password }) {
       firstName,
       lastName,
       email,
-      password,
-    },
+      password
+    }
   });
-  if (!newUser) throw internalServerException('Failed to create user');
+  if (!newUser) throw internalServerException("Failed to create user");
   return newUser;
 }
 
 export async function getUserByEmail(email) {
-  return await prisma.user.findUnique({ where: { email }, omit: { password: true } });
+  return await prisma.user.findUnique({ where: { email } });
 }
 
 export async function getUserById(userId) {
   const user = await prisma.user.findUnique({ where: { id: userId }, omit: { password: true } });
-  if (!user) throw notFoundException('User not found');
+  if (!user) throw notFoundException("User not found");
   return user;
 }
