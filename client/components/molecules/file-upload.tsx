@@ -16,7 +16,7 @@ interface FileInputProps {
 const FileInput: React.FC<FileInputProps> = ({
                                                onChange,
                                                maxSize = 1000000, // 1MB
-                                               allowedTypes = ["image/jpeg", "image/png", "image/jpg"],
+                                               allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp", "image/avif"],
                                                name
                                              }: FileInputProps) => {
   const [files, setFiles] = useState<File[]>([]);

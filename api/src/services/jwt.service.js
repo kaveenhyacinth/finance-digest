@@ -1,14 +1,16 @@
-import jwt from 'jsonwebtoken';
-import env from '../config/env.js';
+import jwt from "jsonwebtoken";
+import env from "../config/env.js";
 
 export function generateAccessToken(payload) {
 
   return jwt.sign({
     user: {
       id: payload.id,
-      email: payload.email,
-    },
-  }, env.jwtSecret);
+      email: payload.email
+    }
+  }, env.jwtSecret, {
+    expiresIn: "7 days"
+  });
 }
 
 export function verifyJwtToken(token) {
@@ -17,7 +19,7 @@ export function verifyJwtToken(token) {
     ...payload,
     user: {
       id: payload?.user?.id,
-      email: payload?.user?.email,
-    },
+      email: payload?.user?.email
+    }
   };
 }
