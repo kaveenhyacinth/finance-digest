@@ -10,7 +10,7 @@ export const Heading1 = ({ text, className }: TypographyProps) => {
   return (
     <p
       className={clsx(
-        "font-serif font-normal text-5xl leading-[98%] tracking-normal capitalize",
+        "font-noto font-normal text-5xl leading-[98%] tracking-normal capitalize",
         className,
       )}
     >

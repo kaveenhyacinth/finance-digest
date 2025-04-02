@@ -1,20 +1,32 @@
 import type { AspidaClient } from 'aspida';
 import { dataToURLString } from 'aspida';
+import type { Methods as Methods_23mjnn } from './auth/signin';
 import type { Methods as Methods_1kz9onh } from './posts';
 
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? '' : baseURL).replace(/\/$/, '');
-  const PATH0 = '/posts';
+  const PATH0 = '/auth/signin';
+  const PATH1 = '/posts';
   const GET = 'GET';
+  const POST = 'POST';
 
   return {
+    auth: {
+      signin: {
+        post: (option: { body: Methods_23mjnn['post']['reqBody'], config?: T | undefined }) =>
+          fetch<Methods_23mjnn['post']['resBody']>(prefix, PATH0, POST, option).json(),
+        $post: (option: { body: Methods_23mjnn['post']['reqBody'], config?: T | undefined }) =>
+          fetch<Methods_23mjnn['post']['resBody']>(prefix, PATH0, POST, option).json().then(r => r.body),
+        $path: () => `${prefix}${PATH0}`,
+      },
+    },
     posts: {
       get: (option: { query: Methods_1kz9onh['get']['query'], config?: T | undefined }) =>
-        fetch<Methods_1kz9onh['get']['resBody']>(prefix, PATH0, GET, option).json(),
+        fetch<Methods_1kz9onh['get']['resBody']>(prefix, PATH1, GET, option).json(),
       $get: (option: { query: Methods_1kz9onh['get']['query'], config?: T | undefined }) =>
-        fetch<Methods_1kz9onh['get']['resBody']>(prefix, PATH0, GET, option).json().then(r => r.body),
+        fetch<Methods_1kz9onh['get']['resBody']>(prefix, PATH1, GET, option).json().then(r => r.body),
       $path: (option?: { method?: 'get' | undefined; query: Methods_1kz9onh['get']['query'] } | undefined) =>
-        `${prefix}${PATH0}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`,
+        `${prefix}${PATH1}${option && option.query ? `?${dataToURLString(option.query)}` : ''}`,
     },
   };
 };

@@ -39,8 +39,8 @@ const TextInputField = extendVariants(Input, {
         input: "text-tiny",
       },
       md: {
-        inputWrapper: "h-10 min-h-10",
-        input: "text-small",
+        inputWrapper: "h-12",
+        // input: "text-small",
       },
       xl: {
         inputWrapper: "h-14 min-h-14",
@@ -68,6 +68,7 @@ const TextInputField = extendVariants(Input, {
     },
   },
   defaultVariants: {
+    size: "md",
     radius: "xs",
     color: "base",
     textSize: "base",
