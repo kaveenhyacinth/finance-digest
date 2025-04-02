@@ -13,7 +13,7 @@ interface PostGridProps {
 
 export const PostGrid: React.FC<PostGridProps> = ({ posts: initPosts }) => {
   const [posts, setPosts] = useState<PostResponse[]>(initPosts);
-  const [page, setPage] = useState(initPosts?.length ? 2 : 1);
+  const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
