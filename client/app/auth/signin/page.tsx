@@ -6,12 +6,14 @@ import NextLink from "next/link";
 
 export const metadata = { title: `Sign In` };
 
-export default function page() {
+export default function SigninPage() {
   return (
     <PageContainer title="Welcome back!" maxContainerWidth={502}>
       <SignInForm />
       <div className="mt-10 flex justify-center items-center">
-        <p>Don't have an account? <NextLink href="/auth/signup" className="text-purple-400 uppercase font-roboto font-bold">Sign up</NextLink></p>
+        <p>Don't have an account? <NextLink href="/auth/signup"
+                                            className="text-purple-400 uppercase font-roboto font-bold">Sign
+          up</NextLink></p>
       </div>
     </PageContainer>
   );

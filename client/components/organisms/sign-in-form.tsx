@@ -32,8 +32,9 @@ export default function SignInForm() {
       setIsAuthenticated(true);
       const redirect = searchParams.get("rt");
       if (redirect) {
-        router.replace(redirect);
+        return router.replace(redirect);
       }
+      return router.replace("/");
     } catch (error: any) {
       addToast({
         title: error?.response?.data?.message ?? "Login failed",
@@ -43,7 +44,7 @@ export default function SignInForm() {
     } finally {
       setIsSigninPending(false);
     }
-  }, []);
+  }, [searchParams, setIsAuthenticated]);
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
