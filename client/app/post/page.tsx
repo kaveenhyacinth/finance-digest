@@ -1,13 +1,13 @@
 import React from "react";
 
 import PostForm from "@/components/organisms/post-form";
-import { ContentWrapper } from "@/components/templates/content-wrapper";
+import { PageContainer } from "@/components/templates/page-container";
 export const metadata = { title: `Create Post` };
 
 export default function page() {
   return (
-    <ContentWrapper title="Create Post">
+    <PageContainer title="Create Post">
       <PostForm />
-    </ContentWrapper>
+    </PageContainer>
   );
 }

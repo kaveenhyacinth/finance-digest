@@ -4,15 +4,14 @@ import aspida from "@aspida/axios";
 import { STORAGE_KEY_TOKEN } from "@/lib/constants";
 
 import sdk from "./$api";
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import env from "@/config/env";
 
 const http = axios.create({
-  baseURL: apiUrl,
+  baseURL: env.apiUrl,
   headers: {
     "Content-Type": "application/json",
-    "Accept": "application/json",
-  },
+    "Accept": "application/json"
+  }
 });
 
 http.interceptors.request.use(
@@ -31,7 +30,7 @@ http.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
 // http.interceptors.response.use();

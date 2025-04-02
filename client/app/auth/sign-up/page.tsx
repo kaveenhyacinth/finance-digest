@@ -2,12 +2,12 @@
 import React from "react";
 
 import SignUpForm from "@/components/organisms/sign-up-form";
-import { ContentWrapper } from "@/components/templates/content-wrapper";
+import { PageContainer } from "@/components/templates/page-container";
 
 export default function page() {
   return (
-    <ContentWrapper title="Sign Up">
+    <PageContainer title="Sign Up">
       <SignUpForm />
-    </ContentWrapper>
+    </PageContainer>
   );
 }

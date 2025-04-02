@@ -1,25 +1,30 @@
-import { ArticleCard } from "@/components/molecules/article-card";
 import { fgApi } from "@/api";
+import { PageContainer } from "@/components/templates/page-container";
+import { PostGrid } from "@/components/organisms/post-grid";
 
 export default async function Home() {
+  /**
+   * Loading initial posts in SSR
+   */
   const posts = await fgApi.posts.$get({
     query: {
       page: 1,
-      size: 10
+      size: 20
     }
-  })
-  console.log(posts);
+  });
 
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-      {posts?.data?.map((item, index) => (
-        <ArticleCard
-          key={index}
-          image={item.image}
-          redirectLink={item.url}
-          title={item.title}
-        />
-      ))}
-    </section>
+    <PageContainer marginAfterLogo={58}>
+      <div className="py-8 md:py-10">
+        <section className="mb-11">
+          <h1
+            className="uppercase w-full xs:w-[380px] md:w-[657px] text-[40px]/[47px] md:text-[70px]/[70px] font-noto"
+          >
+            Latest news from the world of <span className="font-roboto-mono">Finance</span>
+          </h1>
+        </section>
+        <PostGrid posts={posts.data ?? []} />
+      </div>
+    </PageContainer>
   );
 }
