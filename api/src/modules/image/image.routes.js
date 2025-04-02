@@ -1,6 +1,6 @@
 import express from 'express';
 import { uploader } from '../../services/multer.service.js';
-import { uploadSingle } from './images.controller.js';
+import { uploadSingle } from './image.controller.js';
 
 const router = express.Router();
 

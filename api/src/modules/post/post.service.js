@@ -12,7 +12,7 @@ export async function findAllFinnhubPosts() {
       });
     });
 
-    //* Mapping data as the posts model which is defined in /prisma/schema/posts.prisma
+    //* Mapping data as the post model which is defined in /prisma/schema/post.prisma
     return data?.map(post => ({
       id: post.id,
       title: post.headline,

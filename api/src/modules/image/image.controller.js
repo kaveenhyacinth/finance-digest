@@ -1,5 +1,5 @@
 import { errorRes, successRes } from '../../lib/utils/response.util.js';
-import { uploadSingleImage } from './images.service.js';
+import { uploadSingleImage } from './image.service.js';
 import { badRequestException } from '../../lib/utils/exception.util.js';
 
 export async function uploadSingle(req, res, next) {

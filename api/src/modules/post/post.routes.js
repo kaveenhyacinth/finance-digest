@@ -1,5 +1,5 @@
 import express from 'express';
-import { create, findAll } from './posts.controller.js';
+import { create, findAll } from './post.controller.js';
 
 const router = express.Router();
 

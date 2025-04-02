@@ -1,4 +1,4 @@
-import { createBlottPost, findAllBlottPosts, findAllFinnhubPosts } from './posts.service.js';
+import { createBlottPost, findAllBlottPosts, findAllFinnhubPosts } from './post.service.js';
 import { errorRes, successRes } from '../../lib/utils/response.util.js';
 
 export async function findAll(req, res, next) {
