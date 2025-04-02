@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@heroui/input";
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { AiTwotoneCloseCircle } from "react-icons/ai";
 import { MdOutlineCloudUpload } from "react-icons/md";
 import Image from "next/image";
@@ -14,11 +14,11 @@ interface FileInputProps {
 }
 
 const FileInput: React.FC<FileInputProps> = ({
-  onChange,
-  maxSize = 1000000, // 1MB
-  allowedTypes = ["image/jpeg", "image/png", "image/jpg"],
-  name,
-}: FileInputProps) => {
+                                               onChange,
+                                               maxSize = 1000000, // 1MB
+                                               allowedTypes = ["image/jpeg", "image/png", "image/jpg"],
+                                               name
+                                             }: FileInputProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -67,7 +67,7 @@ const FileInput: React.FC<FileInputProps> = ({
       setDragActive(false);
       handleChange(e.dataTransfer.files);
     },
-    [handleChange],
+    [handleChange]
   );
 
   const removeFile = (index: number) => {
@@ -101,6 +101,7 @@ const FileInput: React.FC<FileInputProps> = ({
           <span className="flex gap-2 justify-center items-center">
             <p className="font-medium text-[#0B0B0B]">Drag your file or </p>
             <button
+              type="button"
               className=" text-[#1849D6] font-medium cursor-pointer self-end"
               onClick={() => inputRef.current?.click()}
             >
@@ -136,6 +137,8 @@ const FileInput: React.FC<FileInputProps> = ({
               <div className="flex items-center space-x-3">
                 {file.type.startsWith("image/") && (
                   <Image
+                    width={100}
+                    height={100}
                     alt="Preview"
                     className="!w-17 h-10 object-cover rounded"
                     src={URL.createObjectURL(file)}

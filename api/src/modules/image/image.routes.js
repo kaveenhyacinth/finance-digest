@@ -11,8 +11,6 @@ router.post(
   '/upload/single',
   authenticationMiddleware,
   uploader.single('image'),
-  singleUploadValidator,
-  validationMiddleware,
   uploadSingle,
 );
 

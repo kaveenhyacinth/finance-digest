@@ -1,30 +1,108 @@
 "use client";
+
 import { Form } from "@heroui/form";
-import React from "react";
+import React, { useCallback, useState } from "react";
 
 import { BaseButton, TextInput } from "../atoms";
 import FileInput from "../molecules/file-upload";
+import { addToast } from "@heroui/toast";
+import { fgApi } from "@/api";
+import { PostRequest } from "@/api/posts/types";
+import { useRouter } from "next/navigation";
+
+
+interface PostFormData {
+  title: string;
+  url: string;
+  featuredImage?: string;
+}
 
 export default function PostForm() {
+  const router = useRouter();
+
   const [submitted, setSubmitted] = React.useState(null);
+  const [isImageUploadingPending, setIsImageUploadingPending] = useState(false);
+  const [isCreatePostPending, setIsCreatePostPending] = useState(false);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.currentTarget));
+  const uploadSingleImage = useCallback(async (file: File) => {
+    const formData = new FormData();
+    formData.append("image", file);
 
-    if (data.featuredImage && data.featuredImage instanceof File) {
-      const file = new File([data.featuredImage], data.featuredImage.name, {
-        ...data.featuredImage,
-        type: data.featuredImage.type,
+    try {
+      setIsImageUploadingPending(true);
+      const response = await fgApi.images.upload.single.$post({
+        body: {
+          image: formData.get("image") as File
+        }
       });
-
-      if (file.type.includes("application/octet-stream")) {
-        // remove unknown binary file
-        delete data.featuredImage;
-      }
+      return response.data.url;
+    } catch (error: any) {
+      addToast({
+        title: error?.response?.data?.message ?? "Failed upload image",
+        icon: "danger",
+        color: "danger"
+      });
+    } finally {
+      setIsImageUploadingPending(false);
     }
-    // console.log(data);
-    setSubmitted(data as any);
+  }, []);
+
+  const createPost = useCallback(async ({ title, url, image }: PostRequest) => {
+    try {
+      setIsCreatePostPending(true);
+      const response = await fgApi.posts.$post({
+        body: { title, url, image }
+      });
+      addToast({
+        title: response.message ?? "Post has been created successfully!",
+        icon: "success",
+        color: "success"
+      });
+      return router.push("/");
+    } catch (error: any) {
+      addToast({
+        title: error?.response?.data?.message ?? "Failed to create the post, please try again later!",
+        icon: "danger",
+        color: "danger"
+      });
+    } finally {
+      setIsCreatePostPending(false);
+    }
+  }, []);
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const featuredImage = formData.get("featuredImage") as File | null;
+
+    if (!featuredImage || featuredImage.size <= 0) {
+      addToast({
+        title: "Invalid image upload. Please try again",
+        icon: "danger",
+        color: "danger"
+      });
+      return;
+    }
+
+
+    const imageUrl = await uploadSingleImage(featuredImage);
+    formData.delete("featuredImage");
+
+    if (!imageUrl) {
+      addToast({
+        title: "Image url is corrupted!",
+        icon: "warning",
+        color: "warning"
+      });
+    }
+
+    const data = Object.fromEntries(formData.entries()) as unknown as PostFormData;
+    await createPost({
+      title: data?.title,
+      image: imageUrl as string,
+      url: data.url
+    });
   };
 
   return (
@@ -43,18 +121,13 @@ export default function PostForm() {
         errorMessage={"External Article Link is required"}
         label="External Article Link"
         labelPlacement="outside"
-        name="articleLink"
+        name="url"
         placeholder="Enter the external link"
       />
       <FileInput name="featuredImage" />
       <BaseButton color="white" type="submit">
         Post
       </BaseButton>
-      {submitted && (
-        <div className="text-small text-default-500">
-          You submitted: <code>{JSON.stringify(submitted)}</code>
-        </div>
-      )}
     </Form>
   );
 }

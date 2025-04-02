@@ -9,7 +9,6 @@ import env from "@/config/env";
 const http = axios.create({
   baseURL: env.apiUrl,
   headers: {
-    "Content-Type": "application/json",
     "Accept": "application/json"
   }
 });
@@ -34,5 +33,7 @@ http.interceptors.request.use(
 );
 
 // http.interceptors.response.use();
+
+export const axiosInstance = http;
 
 export const fgApi = sdk(aspida(http));
