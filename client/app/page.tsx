@@ -1,28 +1,9 @@
-import { fgApi } from "@/api";
 import { PageContainer } from "@/components/templates/page-container";
 import { PostGrid } from "@/components/organisms/post-grid";
 import React from "react";
 import { CreatePostButton } from "@/components/molecules/create-post-button";
-import { PostResponse } from "@/api/posts/types";
 
 export default async function Home() {
-  let posts: PostResponse[] = [];
-
-  try {
-    /**
-     * Loading initial posts in SSR
-     */
-    const response = await fgApi.posts.$get({
-      query: {
-        page: 1,
-        size: 20
-      }
-    });
-    posts = response.data ?? [];
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-  }
-
   return (
     <PageContainer marginAfterLogo={58} headerActionElement={<CreatePostButton />}>
       <div className="w-full">
@@ -33,7 +14,7 @@ export default async function Home() {
             Latest news from the world of <span className="font-roboto-mono">Finance</span>
           </h1>
         </section>
-        <PostGrid posts={posts ?? []} />
+        <PostGrid />
       </div>
     </PageContainer>
   );

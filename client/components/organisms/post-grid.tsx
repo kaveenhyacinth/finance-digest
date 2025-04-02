@@ -6,15 +6,12 @@ import { PostResponse } from "@/api/posts/types";
 import { fgApi } from "@/api";
 import { Spinner } from "@heroui/spinner";
 import { addToast } from "@heroui/toast";
+import { GlobalPreloader } from "@/components/atoms/global-preloader";
 
-interface PostGridProps {
-  posts: PostResponse[];
-}
-
-export const PostGrid: React.FC<PostGridProps> = ({ posts: initPosts }) => {
-  const [posts, setPosts] = useState<PostResponse[]>(initPosts);
+export const PostGrid: React.FC = () => {
+  const [posts, setPosts] = useState<PostResponse[]>([]);
   const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
 
   const loaderRef = useRef(null);
@@ -72,6 +69,10 @@ export const PostGrid: React.FC<PostGridProps> = ({ posts: initPosts }) => {
       (async () => fetchPosts(page))();
     }
   }, [fetchPosts, hasMore, page]);
+
+  if (!posts?.length && isLoading) {
+    return <GlobalPreloader />;
+  }
 
   return (
     <section className="w-full">

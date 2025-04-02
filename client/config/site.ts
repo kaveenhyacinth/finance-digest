@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Blott",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "Finance Digest | Blott",
+  description: "Mini finance news platform",
   navItems: [
     {
       label: "Home",
