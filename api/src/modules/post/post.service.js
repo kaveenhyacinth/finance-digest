@@ -29,23 +29,16 @@ export async function findAllFinnhubPosts() {
 }
 
 export async function findAllBlottPosts() {
-  const data = await prisma.post.findMany();
-  console.log(data);
-  return data;
+  return await prisma.post.findMany();
 }
 
-export async function createBlottPost(post) {
+export async function createBlottPost(userId, { title, image, url }) {
   const postRes = await prisma.post.create({
-    data: {
-      title: post.title,
-      url: post.url,
-      image: post.image,
-    },
+    data: { title, image, url, userId },
   });
-
   if (!postRes) {
     throw internalServerException(500, 'Failed to create post');
   }
 
-  return post;
+  return postRes;
 }

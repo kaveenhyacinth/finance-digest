@@ -3,15 +3,13 @@ import admin from '../../../firebase/firebase-admin.init.cjs';
 
 const bucket = admin.storage().bucket();
 
-export async function uploadSingleImage(userId = '', file) {
-  //TODO: Enable once authentication is done
-  // if (!userId) throw unauthenticatedException('Invalid user')
+export async function uploadSingleImage(folder = '', file) {
 
   const fileName = file?.originalname?.split('.');
   fileName?.pop();
   const title = fileName?.join('.');
 
-  const filePath = generateFilePath({ folder: userId, file: file.originalname });
+  const filePath = generateFilePath({ folder, file: file.originalname });
 
   const blob = bucket.file(filePath);
   const blobStream = blob.createWriteStream({
