@@ -97,12 +97,12 @@ const FileInput: React.FC<FileInputProps> = ({
         onDrop={handleDrop}
       >
         <div className="flex flex-col items-center justify-center space-y-2">
-          <MdOutlineCloudUpload className="w-8 h-8 text-[#1849D6]" />
+          <MdOutlineCloudUpload className="w-8 h-8 text-purple-500" />
           <span className="flex gap-2 justify-center items-center">
             <p className="font-medium text-[#0B0B0B]">Drag your file or </p>
             <button
               type="button"
-              className=" text-[#1849D6] font-medium cursor-pointer self-end"
+              className=" text-purple-500 font-medium cursor-pointer self-end"
               onClick={() => inputRef.current?.click()}
             >
               browse

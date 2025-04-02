@@ -23,7 +23,7 @@ export const ArticleCard = ({
                               isFirstItem = false
                             }: ArticleCardProps) => {
   return (
-    <div className="w-full ">
+    <NextLink href={redirectLink} target="_blank" rel="noopener noreferrer" className="w-full">
       <div className="next-image-fluid relative">
         <Image
           alt="Hero image"
@@ -44,6 +44,6 @@ export const ArticleCard = ({
           <BsArrowUpRightCircle className="self-center" />
         </div>
       </NextLink>
-    </div>
+    </NextLink>
   );
 };

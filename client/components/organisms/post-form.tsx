@@ -1,7 +1,7 @@
 "use client";
 
 import { Form } from "@heroui/form";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import { BaseButton, TextInput } from "../atoms";
 import FileInput from "../molecules/file-upload";
@@ -9,6 +9,7 @@ import { addToast } from "@heroui/toast";
 import { fgApi } from "@/api";
 import { PostRequest } from "@/api/posts/types";
 import { useRouter } from "next/navigation";
+import { Progress } from "@heroui/progress";
 
 
 interface PostFormData {
@@ -20,15 +21,25 @@ interface PostFormData {
 export default function PostForm() {
   const router = useRouter();
 
-  const [submitted, setSubmitted] = React.useState(null);
   const [isImageUploadingPending, setIsImageUploadingPending] = useState(false);
   const [isCreatePostPending, setIsCreatePostPending] = useState(false);
+
+  const isPostCreateFlowPending = useMemo(() =>
+      isCreatePostPending || isImageUploadingPending,
+    [isCreatePostPending, isImageUploadingPending]
+  );
+
+  const progressLoaderLabel = useMemo(() => {
+    if (isImageUploadingPending) return "Uploading image...";
+    return "Posting...";
+  }, [isImageUploadingPending]);
 
   const uploadSingleImage = useCallback(async (file: File) => {
     const formData = new FormData();
     formData.append("image", file);
 
     try {
+      setIsCreatePostPending(true);
       setIsImageUploadingPending(true);
       const response = await fgApi.images.upload.single.$post({
         body: {
@@ -125,9 +136,13 @@ export default function PostForm() {
         placeholder="Enter the external link"
       />
       <FileInput name="featuredImage" />
-      <BaseButton color="white" type="submit">
-        Post
+      <BaseButton color="white" type="submit" isLoading={isPostCreateFlowPending}>
+        {isPostCreateFlowPending ? progressLoaderLabel : "Post"}
       </BaseButton>
+      {isPostCreateFlowPending ?
+        <div className="w-full flex felx-col justify-center items-center">
+          <Progress aria-label="Loading..." color="secondary" isIndeterminate={isPostCreateFlowPending} className="max-w-xs" size="sm" />
+        </div> : <></>}
     </Form>
   );
 }
