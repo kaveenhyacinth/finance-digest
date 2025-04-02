@@ -2,6 +2,7 @@ import path from 'path';
 import crypto from 'crypto';
 
 export const allowedImageTypes = ['.png', '.jpg', '.jpeg'];
+export const allowedMimeTypes = ['image/png', 'image/jpg', 'image/jpeg'];
 
 export const mb100 = 100 * 1024 * 1024; // 100MB
 
