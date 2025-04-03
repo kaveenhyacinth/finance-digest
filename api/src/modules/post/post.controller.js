@@ -8,10 +8,10 @@ export async function findAll(req, res, next) {
   const { size, offset, getPaginationMeta } = pagination;
 
   try {
-    const finnhubPosts = await findAllFinnhubPosts();
-    const blottPosts = await findAllBlottPosts();
+    const finnhubPosts = await findAllFinnhubPosts(); // Fetch only 100 posts
+    const blottPosts = await findAllBlottPosts(); // Fetch only 100 posts
 
-    const feed = [...blottPosts, ...finnhubPosts];
+    const feed = [...blottPosts, ...finnhubPosts]; // Maximum will be 200 posts
     const sortedFeed = feed?.sort(
       (a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime(),
     );
